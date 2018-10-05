@@ -1,25 +1,40 @@
 class Pango < Formula
   desc "Framework for layout and rendering of i18n text"
-  homepage "http://www.pango.org/"
-  url "https://download.gnome.org/sources/pango/1.40/pango-1.40.13.tar.xz"
-  sha256 "f84e98db1078772ff4935b40a1629ff82ef0dfdd08d2cbcc0130c8c437857196"
+  homepage "https://www.pango.org/"
+  url "https://download.gnome.org/sources/pango/1.42/pango-1.42.4.tar.xz"
+  sha256 "1d2b74cd63e8bd41961f2f8d952355aa0f9be6002b52c8aa7699d9f5da597c9d"
 
-  head do
-    url "https://git.gnome.org/browse/pango.git"
-
-    depends_on "automake" => :build
-    depends_on "autoconf" => :build
-    depends_on "libtool" => :build
-    depends_on "gtk-doc" => :build
+  bottle do
+    sha256 "2e0b04d458fc0c856d41d14642af4cde2da7e98c241c40ed5188a803710d3921" => :mojave
+    sha256 "724efe4176988ca7dd3d5668929064d0a1ec9ed95de56cea5050c4b349a509b8" => :high_sierra
+    sha256 "707e4f73f2cb17cf3584312a7f768de4b2b7b1868b1620826f0ed93072b0a321" => :sierra
+    sha256 "63181347fdcedd1a797121b93126ed3e4a45907c39efa693b2803da112487f73" => :el_capitan
   end
 
+  head do
+    url "https://gitlab.gnome.org/GNOME/pango.git"
+
+    depends_on "autoconf" => :build
+    depends_on "automake" => :build
+    depends_on "gtk-doc" => :build
+    depends_on "libtool" => :build
+  end
+
+  depends_on "gobject-introspection" => :build
   depends_on "pkg-config" => :build
   depends_on "cairo"
   depends_on "fontconfig"
-  depends_on :x11 => :optional
+  depends_on "fribidi"
   depends_on "glib"
-  depends_on "gobject-introspection"
   depends_on "harfbuzz"
+  depends_on :x11 => :optional
+
+  # This fixes a font-size problem in gtk
+  # For discussion, see https://bugzilla.gnome.org/show_bug.cgi?id=787867
+  patch do
+    url "https://raw.githubusercontent.com/Homebrew/formula-patches/e0aa10/pango/pango_font_size.patch"
+    sha256 "d5ece753cf393ef507dd2b0415721b4381159da5e2f40793c6d85741b1b163bc"
+  end
 
   def install
     args = %W[
@@ -46,7 +61,7 @@ class Pango < Formula
 
   test do
     system "#{bin}/pango-view", "--version"
-    (testpath/"test.c").write <<-EOS.undent
+    (testpath/"test.c").write <<-EOS
       #include <pango/pangocairo.h>
 
       int main(int argc, char *argv[]) {
