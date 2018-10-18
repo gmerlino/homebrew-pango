@@ -20,13 +20,15 @@ class Pango < Formula
     depends_on "libtool" => :build
   end
 
+  option "with-x11"
+
   depends_on "gobject-introspection" => :build
   depends_on "pkg-config" => :build
   depends_on "fontconfig"
   depends_on "fribidi"
+  depends_on "glib"
   depends_on "gmerlino/cairo/cairo" => "with-x11"
   depends_on "gmerlino/harfbuzz/harfbuzz"
-  depends_on "glib"
   depends_on :x11 => :optional
 
   # This fixes a font-size problem in gtk
