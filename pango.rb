@@ -74,7 +74,7 @@ class Pango < Formula
         return 0;
       }
     EOS
-    cairo = Formula["cairo"]
+    cairo = Formula["gmerlino/cairo/cairo"]
     fontconfig = Formula["fontconfig"]
     freetype = Formula["freetype"]
     gettext = Formula["gettext"]
