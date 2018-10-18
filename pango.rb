@@ -24,6 +24,7 @@ class Pango < Formula
   depends_on "pkg-config" => :build
   depends_on "fontconfig"
   depends_on "fribidi"
+  depends_on "gmerlino/cairo/cairo" => "with-x11"
   depends_on "glib"
   depends_on "harfbuzz"
   depends_on :x11 => :optional
