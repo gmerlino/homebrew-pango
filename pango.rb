@@ -18,12 +18,11 @@ class Pango < Formula
   depends_on "gobject-introspection" => :build
   depends_on "meson" => :build
   depends_on "ninja" => :build
-  depends_on "pkg-config" => :build
-  depends_on "cairo"
   depends_on "fontconfig"
   depends_on "fribidi"
   depends_on "glib"
-  depends_on "harfbuzz"
+  depends_on "gmerlino/cairo/cairo" => "with-x11"
+  depends_on "gmerlino/harfbuzz/harfbuzz" => "with-x11"
 
   def install
     mkdir "build" do
@@ -36,8 +35,8 @@ class Pango < Formula
       system "ninja", "install", "-v"
     end
     if build.with? "x11"
-      depends_on "libx11" => :recommended
-      depends_on "libxft" => :recommended
+      depends_on "libx11"
+      depends_on "libxft"
     end
 
   end
