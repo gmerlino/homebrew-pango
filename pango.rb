@@ -28,7 +28,6 @@ class Pango < Formula
   depends_on "fribidi"
   depends_on "glib"
   depends_on "gmerlino/harfbuzz/harfbuzz"
-  depends_on :x11 => :optional
 
   # This fixes a font-size problem in gtk
   # For discussion, see https://bugzilla.gnome.org/show_bug.cgi?id=787867
@@ -49,6 +48,7 @@ class Pango < Formula
     ]
 
     if build.with? "x11"
+      depends_on "libx11" => :recommended
       args << "--with-xft"
     else
       args << "--without-xft"
